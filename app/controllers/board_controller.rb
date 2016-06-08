@@ -4,7 +4,7 @@ class BoardController < UIViewController
 
   def viewDidLoad
     super
-    
+
     self.init_views
     self.new_game
   end
@@ -29,17 +29,52 @@ class BoardController < UIViewController
 
     # create label for display
     @label = UILabel.alloc.initWithFrame([[0,0], [0,0]])
-    @label.textColor = UIColor.whiteColor
+    @label.textColor = UIColor.blackColor
     @label.font = UIFont.systemFontOfSize(30)
-    @label.backgroundColor = nil
+    @label.backgroundColor = UIColor.grayColor
 
     view.addSubview(@label)
     view.addSubview(@board_view)
   end
 
+  def touchesEnded(touched, withEvent:event)
+    for i in 0..8
+      if event.touchesForView(@square_views[i])
+        if !@board.accept_move(i, @current_player)
+          show_info("Illegal move!")
+        else
+          @current_player += 1
+          @current_player %= 2
+        end
+        break
+      end
+    end
+
+    check_for_winner
+  end
+
+  def check_for_winner
+    winner = @board.game_over?
+    return unless winner
+
+    if winner == -1
+      show_info("It's a draw!")
+    else
+      show_info("Player #{winner + 1} wins!!!")
+    end
+    sleep 2
+    @board.reset
+  end
+
   def new_game
     @board = Board.new
     @current_player = 0
+  end
+
+  def show_info(text)
+    @label.text = text
+    @label.sizeToFit
+    @label.center = [160, 50]
   end
 
 end
