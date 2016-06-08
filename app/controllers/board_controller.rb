@@ -25,6 +25,13 @@ class BoardController < UIViewController
       end
     end
 
+    # create label for display
+    @label = UILabel.alloc.initWithFrame([[0,0], [0,0]])
+    @label.textColor = UIColor.whiteColor
+    @label.font = UIFont.systemFontOfSize(30)
+    @label.backgroundColor = nil
+
+    view.addSubview(@label)
     view.addSubview(@board_view)
   end
 
