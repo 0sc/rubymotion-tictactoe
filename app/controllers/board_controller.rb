@@ -5,8 +5,8 @@ class BoardController < UIViewController
   def viewDidLoad
     super
 
-    self.init_views
     self.new_game
+    self.init_views
   end
 
   def init_views
@@ -20,7 +20,7 @@ class BoardController < UIViewController
       for j in 0..2
         square_view = UIView.alloc.initWithFrame([[j * (SQUARE_SIZE + 2), i * (SQUARE_SIZE + 2)], [SQUARE_SIZE - 4, SQUARE_SIZE - 4]])
         square_view.layer.cornerRadius = 5.0
-        square_view.backgroundColor = UIColor.whiteColor
+        square_view.backgroundColor = COLORS[@board.grid[@square_views.length]]
 
         @square_views[3*i + j] = square_view
         @board_view.addSubview(square_view)
@@ -43,6 +43,7 @@ class BoardController < UIViewController
         if !@board.accept_move(i, @current_player)
           show_info("Illegal move!")
         else
+          @square_views[i].backgroundColor = COLORS[@board.grid[i]]
           @current_player += 1
           @current_player %= 2
         end
@@ -77,4 +78,7 @@ class BoardController < UIViewController
     @label.center = [160, 50]
   end
 
+  def board_changed
+
+  end
 end
