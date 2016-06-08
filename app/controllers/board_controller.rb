@@ -4,7 +4,9 @@ class BoardController < UIViewController
 
   def viewDidLoad
     super
+    
     self.init_views
+    self.new_game
   end
 
   def init_views
@@ -33,6 +35,11 @@ class BoardController < UIViewController
 
     view.addSubview(@label)
     view.addSubview(@board_view)
+  end
+
+  def new_game
+    @board = Board.new
+    @current_player = 0
   end
 
 end
