@@ -2,7 +2,7 @@ class Board
   attr_reader :grid
 
   def initialize
-    @grid = Array.new(9, -1)
+    reset
   end
 
   def accept_move(index, player)
@@ -30,5 +30,6 @@ class Board
   end
 
   def reset
+    @grid = Array.new(9, -1)
   end
 end

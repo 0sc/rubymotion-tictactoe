@@ -4,13 +4,12 @@ class BoardController < UIViewController
 
   def viewDidLoad
     super
-
     self.new_game
     self.init_views
   end
 
   def init_views
-    view.backgroundColor = UIColor.grayColor
+    view.backgroundColor = UIColor.blackColor
 
     @board_view = UIView.alloc.initWithFrame([[0,0], [SQUARE_SIZE * 3, SQUARE_SIZE * 3]])
     @board_view.center = view.center
@@ -65,6 +64,7 @@ class BoardController < UIViewController
     end
     sleep 2
     @board.reset
+    reset_board
   end
 
   def new_game
@@ -78,7 +78,7 @@ class BoardController < UIViewController
     @label.center = [160, 50]
   end
 
-  def board_changed
-
+  def reset_board
+    @square_views.each_with_index{|sqr, i| sqr.backgroundColor = COLORS[@board.grid[i]]}
   end
 end
